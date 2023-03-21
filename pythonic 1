@@ -1,0 +1,133 @@
+######글########
+
+#좋은 코드 예시x
+colors = ['red','blue','green','yellow']
+result = ''
+for s in colors: 
+    result += s
+    
+result
+
+#좋은 코드 예시1
+colors = ['red','blue','green','yellow']
+result = ''.join(colors) #띄어쓰기 없이 붙여라
+result
+
+
+#좋은 코드 예시2
+colors = ['red','blue','green','yellow']
+result = '^^'.join(colors) #^^ 붙여라
+result
+
+
+#좋은 코드 예시3
+colors = ['red','blue','green','yellow']
+result = '\n'.join(colors) 
+result
+
+
+#좋은 코드 예시4
+colors = ['red','blue','green','yellow']
+result = print('\n'.join(colors)) 
+result
+
+#########split and join#######
+
+#split 예시1
+items = 'zero one two three'.split() 
+print(items)
+
+#split 예시2
+example = 'python,java,javascript'
+example.split(',')
+
+#split 예시3
+a,b,c = example.split(',')
+print(a,b,c)
+
+#split 예시4
+example = 'python, java, javascript' #띄어쓰기가 포함되어 있는 경우 split 하면 띄어쓰기도 같이 옴.
+for content in example.split(','):
+    print(content.strip())
+    
+    
+   
+   ######list comprehension##########
+
+result = []
+for i in range(10): 
+    result.append(i) 
+
+result
+
+
+#예시1
+
+result = [i for i in range(10)]
+result
+
+
+#예시2
+
+result = [i for i in range(10) if i%2==0]
+result
+
+
+#예시3
+#nested Loop
+word1 = '12378' # or 'hello'
+word2 = '6486' # or 'world'
+result = [i+j for i in word1 for j in word2]
+result
+
+
+#예시4
+case_1 = ['a','b','c']
+case_2 = ['D','E','A']
+result = [i+j for i in case_1 for j in case_2]
+result
+
+
+
+#예시5 - one dimensional list
+case_1 = ['a','b','c']
+case_2 = ['D','E','c']
+result = [i+j for i in case_1 for j in case_2 if not(i==j)]
+result
+
+result.sort()
+result
+
+
+#예시6
+words = 'The quick brown fox jumps over the lazy dog'.split()
+print(words)
+
+
+stuff = [[w.upper(), w.lower(), len(w)] for w in words]
+stuff
+
+for i in stuff: 
+    print(i)
+    
+#예시7 뒤에 루프가 먼저 돌게 하기 
+case_1 = ['A','B','C']
+case_2 = ['D','E','A']
+result = [ [i+j for i in case_1] for j in case_2]
+result
+
+
+#속도 비교 
+def list_comprehension(): 
+    result = [ i for i in range(1000)]
+
+def general_list(): 
+    result = []
+    for i in range(1000): 
+        result.append(i) 
+
+
+%timeit general_list() 
+%timeit list_comprehension()
+
+
