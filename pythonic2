@@ -1,0 +1,134 @@
+#######Enumerate and zip##########
+
+#enumerate 예시1
+for i,v in enumerate(['tic','tac','toe']): 
+    print(i,v)
+    
+#enumerate 예시1-2
+for i,v in enumerate('ABC'): #or ['A','B','C']
+    print("{0}\t{1}".format(i,v))
+    
+    
+#enumerate 예시2-0
+my_str = 'ABCD'
+enumerate(my_str)
+
+#enumerate 예시2
+mylist = ['a','b','c','d']
+list(enumerate(mylist))
+#list의 있는 index와 값을 unpacking 하여 list로 저장 
+
+#enumerate 예시2-2 dic타입으로
+my_str = 'ABCD'
+{i:v for i,v in enumerate(my_str)}
+
+#enumerate 예시3 list comprehension 사용
+text = 'Samsung Group is a South Korean Multinational conglomerate headquartered '
+[ [i,v] for i,v in enumerate(text.split())]
+
+
+#enumerate 예시3 dic 타입으로 가져옴
+text = 'Samsung Group is a South Korean Multinational conglomerate headquartered '
+{i:v.lower() for i,v in enumerate(text.split())}
+
+
+#zip 예시1
+alist = ['a1','a2','a3']
+blist = ['b1','b2','b3']
+for a,b in zip(alist,blist): 
+    print(a,b)
+    
+    
+#zip 예시1 - list comprehension + list
+[[a,b] for a,b in zip(alist,blist)] 
+
+
+#zip 예시1 - list comprehension + tuple
+[(a,b) for a,b in zip(alist,blist)] 
+
+
+
+#zip 예시2
+a,b,c = zip((1,2,3),(10,20,30),(100,200,300)) #각 튜플의 같은 인덱스끼리 묶음
+a,b,c
+
+[sum(x) for x in zip((1,2,3),(10,20,30),(100,200,300))]
+
+
+# enumerate + zip 예시1
+alist = ['a1','a2','a3']
+blist = ['b1','b2','b3']
+
+for i, (a,b) in enumerate(zip(alist,blist)): 
+    print(i,a,b)
+    
+# enumerate + zip 예시2 (튜플) 값이 한 개 이상이면 이렇게도 함.
+alist = ['a1','a2','a3']
+blist = ['b1','b2','b3']
+
+for i, values in enumerate(zip(alist,blist)): 
+    print(i,values)
+    
+    
+    
+############lambda and MapReduce############
+#lambda 예시1
+f = lambda x,y: x+y
+print(f(1,4)) 
+
+
+#lambda 예시2 (3제곱) 
+f = lambda x: x**2
+print(f(3)) 
+
+#lambda 예시3
+(lambda x,y : x+y)(10,50)
+
+
+
+
+#lambda 예시4
+up_low = lambda x: x.upper() + x.lower() 
+
+up_low('My Happy')
+
+#map and reduce 예시1 
+ex = [1,2,3,4,5]
+f = lambda x:x**2
+print(list(map(f,ex)))
+
+
+#map and reduce 예시2 - iteration 
+ex=[1,2,3,4,5]
+f = lambda x: x**2
+list(map(f,ex))
+
+
+for value in map(f,ex): 
+    print(value)
+result = map(f,ex) 
+result 
+next(result) 
+
+
+
+# map and reduce 예시3 - list comprehension 
+
+list(map(lambda x:x**2 if x%2==0 else x, ex))
+
+#사실 위보다 이게 간단 (list comprehension을 쓸 때 굳이 lambda를 쓰지 않아도 될 것 같다.)
+ex = [1,2,3,4,5]
+[value**2 if value%2==0 else value for value in ex]
+
+
+
+#reduce function 설정 
+from functools import reduce 
+
+#reduce function 예제2 - x,y 두 개가 들어가야함. 하나만 넣으면 에러남.
+reduce(lambda x,y: x+y, [1,2,3,4,5])
+
+
+
+#####summary#########
+
