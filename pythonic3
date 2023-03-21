@@ -1,0 +1,260 @@
+##########Iterator and  Generator 
+# iterable object 예시0
+for char in 'Python is Easy':
+    print(char, end=' ')
+    
+    
+
+# iterable object 예시1
+cities = ['Seoul','Busan','Jeju']
+iter_obj = iter(cities) 
+
+#iter_obj는 메모리 주소만 가지고 있지 값을 가지지 않음. 
+#방법1
+print(next(iter_obj))
+print(next(iter_obj))
+print(next(iter_obj))
+next(iter_obj)
+
+
+#방법2
+for value in iter_obj:
+    print(value)
+
+
+
+# 일반적인 generator 예시 
+def general_list(value) :
+    result = []
+    for i in range(value): 
+        result.append(i)
+    return result 
+
+general_list(50) 
+
+
+# yield generator 예시 
+def generator_list(value):
+    result = []
+    for i in range(value): 
+        yield i
+
+generator_list(50)
+next(generator_list(50))
+
+
+#  generator 예시 - list로 한번에 
+def gen_ex() : 
+    n=1 
+    print('first')
+    yield n 
+    
+    n+=1
+    print('second') 
+    yield n 
+    
+    n+=1
+    print('last')
+    yield n 
+    
+    
+for item in gen_ex(): 
+    print(item)
+
+list(gen_ex())
+
+#  generator 예시 - generator comprehension (generator list comprehension) 
+gen_ex = (n*n for n in range(500))
+
+for value in gen_ex: 
+    print(value) 
+    
+print(type(gen_ex))
+list(gen_ex)
+
+#genenrator 메모리 크기 비교 
+from sys import getsizeof 
+gen_ex = (n*n for n in range(500))
+print(getsizeof(gen_ex))
+
+print(getsizeof(list(gen_ex)))
+
+
+
+list_ex = [n*n for n in range(500)]
+print(getsizeof(list_ex))
+
+
+#generator 속도 비교 
+def gen_case(): 
+    gen_ex = (n*n for n in range(500))
+    
+    for v in gen_ex: 
+        pass
+
+def general_case(): 
+    list_ex = [n*n for n in range(500)]
+    
+    for v in list_ex: 
+        pass
+    
+%timeit gen_case() 
+    
+%timeit general_case() 
+
+
+
+###########function argument###########
+#keyword argument 
+def print_something(my_name, your_name): 
+    print('hello {0}, My name is {1}'.format(your_name, my_name))
+    
+
+print_something(your_name = 'TEAMLAB',my_name = 'Sungchul') 
+#한 파라미터가 keyword argument 쓰는 순간 뒤에도 다 keyword argument 사용해야함 
+#순서가 맞으면 상관은 없긴함. 순서가 뒤바꼈으면 keyword다 무조건 쓰셈
+
+print_something('Sungchul', your_name = 'TEAMLAB') 
+
+
+
+#defalt argument 
+def print_something(my_name, your_name="Teamlab"): 
+    print('hello {0}, My name is {1}'.format(your_name, my_name))
+   
+
+print_something('Sungchul')
+
+# 가변인자 예시 
+def asterisk_test(a,b, *args): 
+    print(args)
+    print(type(args))
+    return a+b+sum(args) 
+print(asterisk_test(1,2,3,4,5))
+
+#args 는 한개의 변수, element를 세개 가진 한 개의 튜플일 뿐. 
+
+
+
+
+
+def asterisk_test( *args): 
+    x,y,z = args
+    
+    return x,y,z 
+print(asterisk_test(1,2,3))
+
+#2개 or 4개 입력시 에러 
+
+
+
+
+#키워드 가변인자. 
+def kwargs_test_1(**kwargs):
+    print(kwargs) 
+    
+kwargs_test_1(first = 3, second=5, third = 5) 
+
+
+
+
+
+def kwargs_test_3(one, two, *args, **kwargs):
+    print(one+two+sum(args))
+    print(kwargs) 
+    
+kwargs_test_3(3,4,5,6,7,8,9, first = 3, second=4, third = 5)
+kwargs_test_3(3, two =10, first = 3, second=4, third = 5)
+
+
+
+
+
+
+
+
+###########asterisk unpacking##############
+#asterisk 예시 1
+def asterisk_test(a,*args): 
+    print(a,args)
+    print(type(args))
+    
+asterisk_test(1, *(2,3,4,5,6))
+
+#tuple type은 한 개의 변수를 가지는 것임.
+# *을 붙임으로써 풀어준거임. 5개의 변수가 됨.
+
+
+#asterisk 예시 1 - 에러발생. args는 튜플이기 때문에 이자체로  하나의 변수이므로 에러 안남.
+def asterisk_test(a,args): 
+    print(a,args)
+    print(type(args))
+    
+asterisk_test(1,(2,3,4,5,6))
+
+
+
+#asterisk 예시 1 - 에러발생. args는 튜플이기 때문에 이자체로  하나의 변수이므로 에러 안남.
+def asterisk_test(a,args): 
+    print(a,args)
+    print(type(args))
+    
+asterisk_test(1,*(2,3,4,5,6))
+#별을 넣어줘서 풀리게됨.
+#받을 수 있는 변수사이즈는 1이여서 에러가 나게됨. 
+
+#asterisk unpacking container 예시2
+a,b,c = ([1,2],[3,4],[5,6])
+print(a,b,c)
+
+data = ([1,2],[3,4],[5,6])
+print(*data)
+
+
+
+#asterisk unpacking container 예시3  - keyword 가변인자
+def asterisk_test(a,b,c,d):
+    print(a,b,c,d)
+
+
+data = {"b":1, "c":2, "d":3}
+asterisk_test(10,**data) 
+
+
+
+
+def asterisk_test(a,b,c,d,e=0):
+    print(a,b,c,d,e) 
+
+data = {"d":1, "c":2, "b":3, 'e':56}
+asterisk_test(10,b=3,c=3,d=1,e=56)
+asterisk_test(10,**data)
+
+
+
+#asterisk unpacking container 예시4  - zip
+ex = ([1,2],[3,4],[5,6])
+a,b,c = ex
+
+for data in zip(a,b,c): 
+    print(sum(data)) 
+
+
+
+
+for data in zip(*ex): 
+    print(sum(data))
+
+
+
+ex = ([1,2],[3,4],[5,6],[5,6],[5,6])
+for data in zip(*ex): 
+    print(data) 
+    
+
+
+
+
+
+
+    
